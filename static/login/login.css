@@ -1,0 +1,81 @@
+        /* Reset & font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center; /* horizontal center */
+            align-items: center;     /* vertical center */
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+        }
+
+        /* Container form */
+        .login-container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        /* Judul */
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Input */
+        input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ffb547;
+            box-shadow: 0 0 0 2px rgba(255,181,71,0.2);
+        }
+
+        /* Button */
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ffb547;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #ffa500;
+            transform: translateY(-2px);
+        }
+
+        /* Links */
+        p, a {
+            margin-top: 10px;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        p a:hover, a:hover {
+            color: #ffb547;
+        }

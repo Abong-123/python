@@ -1,0 +1,124 @@
+/* ================== RAPOR PAGE ================== */
+body {
+    background: #f4f6f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* container utama */
+.rapor {
+    max-width: 900px;
+    margin: 60px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+/* judul */
+#header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #5f1782;
+}
+
+/* form */
+.rapor form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+/* input */
+.rapor input {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.rapor input:focus {
+    outline: none;
+    border-color: #a517ba;
+    box-shadow: 0 0 0 2px rgba(165, 23, 186, 0.2);
+}
+
+/* subjudul */
+.rapor h3 {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+    color: #5f1782;
+}
+
+/* tombol */
+.rapor button {
+    grid-column: 1 / -1;
+    padding: 14px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(to right, #a517ba, #5f1782);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.rapor button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(95, 23, 130, 0.4);
+}
+
+.rapor button:active {
+    transform: scale(0.95);
+}
+
+/* hasil raport */
+.hasil {
+    margin-top: 40px;
+    background: #f9f3fc;
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 6px solid #a517ba;
+}
+
+.hasil h3 {
+    color: #5f1782;
+    margin-bottom: 20px;
+}
+
+.hasil p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+/* status warna */
+.hasil .lulus {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.hasil .tidak-lulus {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* link back */
+.back-home {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #5f1782;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-home:hover {
+    text-decoration: underline;
+}
+
+/* responsive */
+@media (max-width: 576px) {
+    .rapor {
+        padding: 25px;
+    }
+}

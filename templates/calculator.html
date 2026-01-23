@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='calculator/calculator.css') }}">
+</head>
+<body>
+
+<div class="calculator">
+    <form method="post">
+        <input type="text" name="display" value="{{ display }}" readonly>
+
+        <div class="buttons">
+            {% for b in ['1','2','3','C','⌫',
+                          '4','5','6','*','/',
+                          '7','8','9','-','^',
+                          '0','.','+','²','%','='] %}
+            <button name="btn" value="{{ b }}">{{ b }}</button>
+            {% endfor %}
+        </div>
+    </form>
+    <a href="/">Back Home</a>
+</div>
+
+</body>
+</html>

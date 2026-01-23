@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <form action="" method="post">
+        <input type="text" name="a" id="" placeholder="nama" required>
+        <input type="number" name="b" id="" placeholder="umur" required>
+        <input type="text" name="c" id="" placeholder="status" required>
+        <button type="submit">submit</button>
+    </form>
+
+    {% if a %}
+    <h1>Halo temen-temen pekernalkan nama saya {{ a }}</h1>
+    <p>umur {{ b }} tahun, saya adalah seorang {{ c }}</p>
+    {% endif %}
+
+
+<div class="menu">
+    <a href="/about">Go to About</a>
+    <a href="/service">Go to Service</a>
+    <a href="/calculator">Go to Calculator</a>
+    <a href="/rapor">Go to Rapor</a>
+    <a href="/register">Go to Register</a>
+    <a href="/login">Go to Login</a>
+    <a href="/konversi">Go to Konversi Suhu</a>
+</div>
+
+</body>
+</html>

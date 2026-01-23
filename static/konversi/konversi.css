@@ -1,0 +1,98 @@
+/* Reset & font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+}
+
+/* Judul */
+h1 {
+    margin-bottom: 30px;
+    font-size: 2em;
+    text-align: center;
+}
+
+/* Form */
+form {
+    background: rgba(255,255,255,0.15);
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+input, select, button {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #ffb547;
+    box-shadow: 0 0 0 2px rgba(255,181,71,0.2);
+}
+
+button {
+    border: none;
+    background: #ffb547;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ffa500;
+    transform: translateY(-2px);
+}
+
+/* Hasil */
+.hasil {
+    margin-top: 30px;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.hasil h2 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Status warna */
+.status-panas {
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+.status-dingin {
+    color: #4dd2ff;
+    font-weight: bold;
+}
+
+/* Nilai suhu */
+.hasil p {
+    font-size: 16px;
+    margin: 5px 0;
+    text-align: center;
+}

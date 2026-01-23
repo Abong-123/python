@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='konversi/konversi.css') }}">
+    <title>DKonversi Suhu</title>
+</head>
+<body>
+    <form action="" method="post">
+        <input type="number" name="a" id="" placeholder="masukan nominal suhu" required>
+        <select name="operator" required>
+            <option value="farenheit">°F</option>
+            <option value="celsius">°C</option>
+            <option value="reamur">°R</option>
+            <option value="kelvin">°K</option>
+    </select>
+        <button type="submit">submit</button>
+    </form>
+
+    <a href="/" style="color: black;">Back Home</a>
+
+    {% if a is not none %}
+    <h1>Suhu terasa {{ status }}</h1>
+    <p>{{ b }}</p>
+    <p>{{ c }}</p>
+    <p>{{ d }}</p>
+    {% endif %}
+</body>
+</html>

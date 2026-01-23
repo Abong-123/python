@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raport Siswa SMP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='rapor/rapor.css') }}">
+</head>
+<body>
+
+<div class="rapor">
+    <h2 id="header">Program Cetak Raport</h2>
+
+    <form action="" method="post">
+        <input type="text" name="a" id="" placeholder="nama" required>
+        <input type="text" name="b" id="" placeholder="kelas" required>
+        <input type="text" name="c" id="" placeholder="tahun" required>
+
+        <h3>Masukan Nilai</h3>
+        <input type="number" name="nilai[]" id="" placeholder="matematika" required>
+        <input type="number" name="nilai[]" id="" placeholder="biologi" required>
+        <input type="number" name="nilai[]" id="" placeholder="bahasa indonesia" required>
+        <input type="number" name="nilai[]" id="" placeholder="bahasa inggris" required>
+        <input type="number" name="nilai[]" id="" placeholder="algoritma & pemograman" required>
+        <input type="number" name="nilai[]" id="" placeholder="pemanfaatan tekhnologi" required>
+        <input type="number" name="nilai[]" id="" placeholder="seni budaya" required>
+        <input type="number" name="nilai[]" id="" placeholder="sejarah" required>
+        <input type="number" name="nilai[]" id="" placeholder="olahraga" required>
+        <input type="number" name="nilai[]" id="" placeholder="fisika" required>
+        <button type="submit">submit</button>
+    </form>
+<a href="/" style="color: black;">Back Home</a>
+</div>
+
+{% if rata_rata is not none %}
+<div class="hasil">
+    <h3>Hasil Raport</h3>
+    <p><strong>Nama:</strong> {{ a }}</p>
+    <p><strong>Kelas:</strong> {{ b }}</p>
+    <p><strong>Tahun:</strong> {{ c }}</p>
+    <p><strong>Sekolah:</strong> {{ sekolah }}</p>
+
+    <hr>
+
+    <p><strong>Rata-rata:</strong> {{ rata_rata }}</p>
+    <p><strong>Grade:</strong> {{ grade }}</p>
+    <p><strong>status:</strong> {{ status }}</p>
+</div>
+{% endif %}
+
+</body>
+</html>

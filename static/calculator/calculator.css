@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #2a2a2a, #0f0f0f);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ===== Calculator Card ===== */
+.calculator {
+    width: 320px;
+    background: rgba(30, 30, 30, 0.9);
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ===== Display ===== */
+.calculator input {
+    width: 100%;
+    height: 64px;
+    border: none;
+    outline: none;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 26px;
+    text-align: right;
+    padding: 0 14px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.6);
+}
+
+/* ===== Buttons Grid ===== */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+/* ===== Button Base ===== */
+button {
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #eee;
+    background: linear-gradient(to bottom, #3a3a3a, #1e1e1e);
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.15s ease;
+}
+
+/* Hover */
+button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(to bottom, #4a4a4a, #262626);
+}
+
+/* Active */
+button:active {
+    transform: scale(0.96);
+    box-shadow:
+        inset 0 4px 8px rgba(0,0,0,0.8);
+}
+
+/* ===== Operator Buttons ===== */
+button[value="+"],
+button[value="-"],
+button[value="*"],
+button[value="/"],
+button[value="^"] {
+    background: linear-gradient(to bottom, #a517ba, #5f1782);
+    color: #fff;
+}
+
+button[value="+"]:hover,
+button[value="-"]:hover,
+button[value="*"]:hover,
+button[value="/"]:hover,
+button[value="^"]:hover {
+    background: linear-gradient(to bottom, #b32bd1, #6e1f95);
+}
+
+/* ===== Special Buttons ===== */
+button[value="="] {
+    grid-column: span 2;
+    background: linear-gradient(to bottom, #00c853, #009624);
+    color: #fff;
+}
+
+button[value="="]:hover {
+    background: linear-gradient(to bottom, #1be067, #00a82d);
+}
+
+button[value="C"] {
+    background: linear-gradient(to bottom, #ff5252, #d50000);
+    color: #fff;
+}
+
+button[value="⌫"] {
+    background: linear-gradient(to bottom, #ff9800, #e65100);
+    color: #fff;
+}
+
+/* ===== Square Button ===== */
+button[value="²"] {
+    background: linear-gradient(to bottom, #607d8b, #37474f);
+    color: #fff;
+}
+
+/* ===== Mobile Friendly ===== */
+@media (max-width: 400px) {
+    .calculator {
+        width: 95%;
+    }
+}
