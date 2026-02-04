@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile/profile.css') }}">
+    <link rel="stylesheet"chref="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <title>Profile</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Profile</h2>
+        <form method="post" enctype="multipart/form-data">
+            <input type="text" name="nama" placeholder="Masukan nama anda" required><br><br>
+            <input type="number" name="phone" placeholder="Masukan nomer telephone anda" required><br><br>
+            <input type="email" name="email" placeholder="Masukan email anda" required><br><br>
+            <input type="text" name="instagram" placeholder="Masukan nama instagram anda" required><br><br>
+            <input type="text" name="facebook" placeholder="Masukan nama facebook anda" required><br><br>
+            <input type="file" name="foto" accept="image/*" placeholder="Masukan foto profile anda" required><br><br>
+            <button type="submit" name="action" value="tambah">Submit</button>
+        </form>
+
+        <div class="box">
+            {% if profile %}
+            <hr>
+            <h3>Profile Saya</h3>
+            <img src="{{ url_for('static', filename='profile/images/' + profile.foto) }}"
+                width="150" style="border-radius:50%"><br><br>
+
+            <p><b>Nama:</b> {{ profile.nama }}</p>
+            <p><b>Phone:</b> {{ profile.phone }}</p>
+            <p><b>Email:</b> {{ profile.email }}</p>
+            <div class="social">
+                <a href="{{ profile.instagram }}" target="_blank" class="ig">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <a href="{{ profile.facebook }}" target="_blank" class="fb">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,13 +1,24 @@
+#================== IMPORT ============================
 from flask import Flask, redirect, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+import json
+from werkzeug.utils import secure_filename
+from datetime import date, timedelta
 
+#======================= STARTED ======================
 app = Flask(__name__)
 app.secret_key = 'aP3R$!x9_SecretKey123'
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+UPLOAD_FOLDER = 'static/profile/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 db = SQLAlchemy(app)
 
 # ================= MODEL (TABEL) =================
@@ -27,9 +38,82 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
+class Kasir(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(50), nullable=False)
+    code = db.Column(db.Integer, nullable=False)
+    harga = db.Column(db.Integer, nullable=False)
+
+class Profile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(100), nullable=False)
+    phone = db.Column(db.Integer, nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    instagram = db.Column(db.String(50), nullable=False)
+    facebook = db.Column(db.String(50), nullable=False)
+    foto = db.Column(db.String(200), nullable=True)
+
+class Hidroponik(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(100), nullable=False)
+    jenis = db.Column(db.String(30), nullable=False)
+    jumlah = db.Column(db.Integer, nullable=False)
+
+    tanggal_tanam = db.Column(db.Date, nullable=False)
+    lama_panen = db.Column(db.Integer, nullable=False)
+    tanggal_panen = db.Column(db.Date, nullable=False)
+
+    ganti_pupuk = db.Column(db.Integer, nullable=False)
+
 with app.app_context():
     db.create_all()
 
+#==================== FUNCTION ==========================
+FILE = "todo.json"
+def load_tasks():
+    if not os.path.exists(FILE):
+        return[]
+    with open(FILE, "r") as f:
+        return json.load(f)
+
+def save_tasks(tasks):
+    with open(FILE, "w") as f:
+        json.dump(tasks, f)
+
+
+TANAMAN_FILE = "tanaman.json"
+def load_tanaman():
+    if not os.path.exists(TANAMAN_FILE):
+        return []
+    try:
+        with open(TANAMAN_FILE, "r") as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        return []
+
+def save_tanaman(data):
+    with open(TANAMAN_FILE, "w") as f:
+        json.dump(data, f)
+
+def hitung_ganti_pupuk(jenis):
+    if jenis == "daun":
+        return 4
+    elif jenis == "bunga":
+        return 3
+    elif jenis == "buah":
+        return 2
+    elif jenis == "flower":
+        return 5
+    return 4
+
+def sisa_hari(tanggal_target):
+    return(tanggal_target - date.today()).days
+
+def sisa_ganti_pupuk(tanggal_tanam, interval):
+    hari_berjalan = (date.today() - tanggal_tanam).days
+    return interval - (hari_berjalan % interval)
+
+#==================== ROUTING ==========================
 @app.route('/', methods =['GET', 'POST'])
 def home():
     a = b = c = None
@@ -168,9 +252,6 @@ def dashboard():
         return redirect('/login')
     return render_template('dashboard.html', user=session['user'])
 
-
-
-
 @app.route('/konversi', methods=['GET', 'POST'])
 def konversi():
     a = None
@@ -229,7 +310,190 @@ def konversi():
 
     return render_template('konversi.html', a=a, status=status, b=b, c=c, d=d)
 
+@app.route('/kasir', methods=['GET', 'POST'])
+def kasir():
 
+    if 'cart' not in session:
+        session['cart'] = []
+    
+    cart = session['cart']
+    pesan = None
+    if request.method == 'POST':
+        action = request.form.get('action')
 
+        match action:
+            case 'more':
+                code = int(request.form['id'])
+                qty = int(request.form['jumlah'])
+
+                barang = Kasir.query.filter_by(code=code).first()
+
+                if not barang:
+                    pesan = 'Barang tidak ditemukan'
+                else:
+                    ditemukan = False
+                
+                    for item in cart:
+                        if item['code'] == code:
+                            item['qty'] += qty
+                            item['total'] = item['qty'] * item['harga']
+                            ditemukan = True
+                            break
+
+                    if not ditemukan:
+                        cart.append({
+                            'code': barang.code,
+                            'barang': barang.nama,
+                            'harga': barang.harga,
+                            'qty': qty,
+                            'total': barang.harga * qty
+                        })
+                    session['cart'] = cart
+                    pesan = 'barang ditambahkan ke keranjang'
+
+            case 'hapus':
+                code = int(request.form['code'])
+                cart = [item for item in cart if item['code'] != code]
+                session['cart'] = cart
+
+            
+            case 'tambah':
+                barang = Kasir(
+                    nama = request.form['barang'],
+                    code = request.form['code'],
+                    harga = request.form['harga']
+                )
+                db.session.add(barang)
+                db.session.commit()
+                pesan = 'Barang berhasil ditambahkan ke database'
+            
+            case 'beli':
+                session.pop('cart', None)
+                pesan = 'Checkout Berhasil'
+    
+    grand_total = sum(item['total'] for item in cart)
+
+    return render_template('kasir.html', cart=cart,grand_total=grand_total,pesan=pesan)
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    profile = Profile.query.first()
+    if request.method == 'POST':
+        nama = request.form['nama']
+        phone = request.form['phone']
+        email = request.form['email']
+        instagram = request.form['instagram']
+        facebook = request.form['facebook']
+
+        foto = request.files.get('foto')
+        filename = None
+
+        if foto and foto.filename != '':
+            filename = secure_filename(foto.filename)
+            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+            # hapus foto lama
+            if profile and profile.foto:
+                old_path = os.path.join(app.config['UPLOAD_FOLDER'], profile.foto)
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+
+            foto.save(path)
+
+        if profile:
+            # UPDATE
+            profile.nama = nama
+            profile.phone = phone
+            profile.email = email
+            profile.instagram = instagram
+            profile.facebook = facebook
+            if filename:
+                profile.foto = filename
+        else:
+            # INSERT
+            profile = Profile(
+                nama=nama,
+                phone=phone,
+                email=email,
+                instagram=instagram,
+                facebook=facebook,
+                foto=filename
+            )
+            db.session.add(profile)
+
+        db.session.commit()
+
+    return render_template('profile.html', profile=profile)
+
+@app.route('/qrgen', methods=['GET', 'POST'])
+def qrgen():
+    qrimage = None
+    if request.method == 'POST':
+        qrcode = str(request.form['qrcode'])
+        if qrcode == "":
+            qrimage = "ERROR"
+        else:
+            qrimage = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrcode
+
+    return render_template('qrgen.html', qrimage=qrimage)
+
+@app.route('/todolist', methods=['GET', 'POST'])
+def todolist():
+    tasks = load_tasks()
+
+    if request.method == 'POST':
+        task = str(request.form['task'])
+
+        if task:
+            tasks.append(task)
+            save_tasks(tasks)
+        
+        return redirect("/todolist")
+    
+    return render_template("todolist.html", tasks=tasks)
+
+@app.route("/delete/<int:index>")
+def delete(index):
+    tasks = load_tasks()
+    if index < len(tasks):
+        tasks.pop (index)
+        save_tasks(tasks)
+    
+    return redirect("/todolist")
+
+@app.route('/hidroponik', methods=['GET', 'POST'])
+def hidroponik():
+    if request.method == 'POST':
+        nama = str(request.form['tanaman'])
+        jenis = request.form.get("jenis")
+        jumlah = int(request.form.get("jumlah", 1))
+        lama_panen = int(request.form.get("panen"))
+
+        tanggal_tanam = date.today()
+        tanggal_panen = tanggal_tanam + timedelta(days=lama_panen)
+        ganti_pupuk = hitung_ganti_pupuk(jenis)
+
+        data = Hidroponik(
+            nama = nama,
+            jenis=jenis,
+            jumlah=jumlah,
+            tanggal_tanam = tanggal_tanam,
+            lama_panen=lama_panen,
+            tanggal_panen = tanggal_panen,
+            ganti_pupuk = ganti_pupuk
+        )
+        db.session.add(data)
+        db.session.commit()
+
+        return redirect("/hidroponik")
+    
+    data = Hidroponik.query.all() or []
+
+    for t in data:
+        t.sisa_panen = sisa_hari(t.tanggal_panen)
+        t.sisa_pupuk = sisa_ganti_pupuk(t.tanggal_tanam, t.ganti_pupuk)
+    return render_template("hidroponik.html",data=data)
+
+#=================== CONNECTED ============================
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000,debug=True)

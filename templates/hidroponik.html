@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hidroponik/hidroponik.css') }}">
+    <title>Hidroponik</title>
+</head>
+<body>
+    <h2>Hidroponik</h2>
+    <form action="" method="POST" class="form-box">
+            <input type="text" name="tanaman" placeholder="tambah tanaman" required>
+            <input type="number" name="jumlah" placeholder="Jumlah tanaman" min="1" required>
+
+            <select id="jenis" name="jenis" required>
+                <option value="daun">Sayuran Daun</option>
+                <option value="bunga">Sayuran Bunga</option>
+                <option value="buah">Buah</option>
+                <option value="flower">Bunga</option>
+            </select>
+
+            <input type="number" name="panen" placeholder="masukan perkiraan lama panen (hari)" min="1" required>
+
+            <button type="submit">Tambah Tanaman</button>
+    </form>
+
+    <ul class="list">
+    {% for t in data %}
+        <li class="container">
+            <div class="header">
+                <b> {{ t.nama }} </b>
+                <span class="jumlah">{{t.jumlah}}</span>
+            </div>
+
+            <div class="jenis">Jenis: {{ t.jenis }}</div>
+
+            <div class="info">
+                <div>
+                    <b>Panen:</b>
+                    {% if t.sisa_panen <= 0 %}
+                        <span class="ok">🌾 Hari ini panen</span>
+                    {% else %}
+                        {{ t.sisa_panen }} hari lagi
+                    {% endif %}
+                </div>
+
+                <div>
+                    <b>Ganti pupuk:</b>
+                    {% if t.sisa_pupuk <= 1 %}
+                        <span class="warning">⚠ Hari ini</span>
+                    {% else %}
+                        {{ t.sisa_pupuk }} hari lagi
+                    {% endif %}
+                </div>
+            </div>
+            <a href="/panen/{{ t.id }}" class="btn-panen">Panen 🌱</a>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

@@ -3,9 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='kasir/kasir.css') }}">
     <title>Document</title>
 </head>
 <body>
-    
+    <div class="container">
+    <h1>Selamat Datang</h1>
+        <h3>Silahkan Masukan data belanjaan</h3>
+
+        {% if pesan %}
+            <div class="pesan">{{ pesan }}</div>
+        {% endif %}
+
+        <form method="post">
+            <input type="number" name="id" placeholder="Masukan kode barang" required><br><br>
+            <input type="number" name="jumlah" placeholder="Masukan Jumlah Barang" required><br><br>
+
+            <div class="button">
+                <button type="submit" name="action" value="more">tambah Keranjang</button>
+            </div>
+        </form>
+
+        <h3>Id tidak ditemukan? <span>Masukan manual</span></h3>
+        <form method="post">
+            <input type="text" name="barang" placeholder="Masukan nama barang" required><br><br>
+            <input type="number" name="code" placeholder="Masukan kode barang" required><br><br>
+            <input type="number" name="harga" placeholder="Masukan Harga Barang" required><br><br>
+            <button type="submit" name="action" value="tambah">Submit</button>
+        </form>
+
+        <h3>Keranjang Belanja</h3>
+        {% if cart %}
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>Kode</th>
+                    <th>Barang</th>
+                    <th>Harga</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>Aksi</th>
+                </tr>
+
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.barang }}</td>
+                    <td>{{ item.harga }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ item.total }}</td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="code" value="{{ item.code }}">
+                            <button type="submit" name="action" value="hapus">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <h3 class="total">Total Bayar: Rp {{ grand_total }}</h3>
+            {% else %}
+            <p>Keranjang kosong</p>
+        {% endif %}
+        {% if cart %}
+        <form method="post" style="margin-top:15px;">
+            <button type="submit" name="action" value="beli">
+                Checkout
+            </button>
+        </form>
+        {% endif %}
+
+        <a href="/">Back Home</a>
+    </div>
 </body>
 </html>

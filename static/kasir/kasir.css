@@ -1,0 +1,174 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* BODY */
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    padding: 40px;
+    color: #333;
+}
+
+/* CONTAINER UTAMA */
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+/* JUDUL */
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+h3 {
+    margin: 20px 0 10px;
+    color: #555;
+}
+
+/* FORM */
+form {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102,126,234,0.2);
+}
+
+/* BUTTON GROUP */
+.button {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* BUTTON GROUP (khusus form atas) */
+.button {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.button button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* BUTTON DEFAULT (selain group) */
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* BUTTON VARIANT */
+button[value="more"] {
+    background: #4caf50;
+    color: #fff;
+}
+
+button[value="more"]:hover {
+    background: #43a047;
+}
+
+button[value="beli"] {
+    background: #ff9800;
+    color: #fff;
+}
+
+button[value="beli"]:hover {
+    background: #fb8c00;
+}
+
+button[value="hapus"] {
+    background: #e53935;
+    color: #fff;
+    font-size: 12px;
+}
+
+button[value="hapus"]:hover {
+    background: #c62828;
+}
+
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background: #667eea;
+    color: #fff;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* TOTAL */
+.total {
+    margin-top: 15px;
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* INFO TEXT */
+span {
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .button {
+        flex-direction: column;
+    }
+
+    body {
+        padding: 20px;
+    }
+}
